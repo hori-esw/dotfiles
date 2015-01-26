@@ -1,0 +1,26 @@
+"フォント設定(Windowsのみ必要)
+set guifont=MS_Gothic:h10
+".gvimrc カラー設定
+"カラー設定した後にCursorIMを定義する
+
+if has('multi_byte_ime')
+  autocmd ColorScheme * highlight Cursor guifg=NONE guibg=Green
+  autocmd ColorScheme * highlight CursorIM guifg=NONE guibg=Purple
+endif
+
+"空白文字系(SpecialKey)は薄く表示する
+autocmd ColorScheme * highlight SpecialKey guifg=lightgray    " GUI版での文字色指定
+"autocmd ColorScheme * highlight SpecialKey guibg=#012345 " GUI版での背景色指定
+
+"カラースキームを設定
+set background=light
+colorscheme Tomorrow
+
+" 縦幅 デフォルトは24
+set lines=60
+" 横幅 デフォルトは80
+set columns=120
+"ビープ音すべてを無効にする
+set visualbell
+set t_vb=
+set noerrorbells "エラーメッセージの表示時にビープを鳴らさない
