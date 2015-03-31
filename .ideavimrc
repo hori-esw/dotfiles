@@ -8,3 +8,5 @@ set smartcase
 set hlsearch
 " 不可視文字を表示する
 set list
+" 音を消す
+set visualbell
