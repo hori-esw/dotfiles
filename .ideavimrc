@@ -1,5 +1,5 @@
 " クリップボードを使う
-set clipboard
+set clipboard=unnamed
 " 検索をファイルの先頭へ循環しない
 set nowrapscan
 " 小文字で検索したときに大文字小文字を無視
