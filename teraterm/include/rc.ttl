@@ -1,0 +1,13 @@
+; .bashrc的なことをこのファイルで定義します。
+
+; ショートカットが効かない不具合対応
+loadkeymap 'KEYBOARD.CNF'
+
+; プロンプトを待つ
+; wait '$ ' '# '
+sendln 'export HISTCONTROL=ignoreboth'
+sendln ' hostname'
+sendln ' set -o vi'
+sendln " alias 'll=ls -laF' 'lt=ls -latrF' 'ld=ls -laFd' 'view=vim -R' 'crontab=crontab -i'"
+sendln ' export PSQL_EDITOR='#$27'vim +'#$22'set syntax=sql'#$22' '#$27'
+sendln ' export PAGER=less'

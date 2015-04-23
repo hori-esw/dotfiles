@@ -1,0 +1,7 @@
+; teratermログの取得を定義します。
+;logopen <filename> <binary flag> <append flag> [<plain text flag> [<timestamp flag> [<hide dialog flag> [<Include screen buffer>]]]]
+getdate LOG_NAME '%Y%m%d_%H%M%S_&h.log'
+LOGDIR = 'C:\Users\hori\log\teraterm\'
+FULLPATH = LOGDIR
+strconcat FULLPATH LOG_NAME
+logopen FULLPATH 0 1 0 1 1
