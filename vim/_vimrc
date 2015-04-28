@@ -1,3 +1,5 @@
+"背景色
+set background=dark
 "インデントの設定
 set autoindent
 set smartindent
@@ -10,27 +12,9 @@ set softtabstop=0
 set number
 "カーソル行強調
 "重くなるので試しにOFF
-"set cursorline
+set cursorline
 "再描画をlazyに
 set lazyredraw
-"Encode
-"下記の指定は環境によって文字化けする可能性があるので適宜変更する
-if has("win32")
-  "set encoding より上に書くこと
-  let &termencoding = &encoding
-endif
-if has('gui_running') && !has('unix')
-    set encoding=UTF-8 "文字コードをUTF-8にする
-endif
-set fileencodings=iso-2022-jp,euc-jp,sjis,utf-8 "ファイルエンコーディング自動認識
-set fileformats=unix,dos,mac "改行コード自動認識
-"Backup
-set backupdir=C:\vim_bk\backup "バックアップディレクトリを指定する
-set directory=C:\vim_bk\swp    "スワップファイルディレクトリを指定する
-set undodir=C:\vim_bk\undo     "アンドゥファイルディレクトリを指定する
-"set browsedir=buffer??? "ファイル保存ダイアログの初期ディレクトリをバッファファイル位置に設定
-"set history=1000??? "履歴保存数
-"Search
 set incsearch    "インクリメンタルサーチを行う
 set hlsearch    "検索結果をハイライトする
 set ignorecase    "検索時に文字の大小を区別しない
@@ -40,41 +24,11 @@ set wrapscan    "検索をファイルの先頭へループする
 "タブ、行末等の不可視文字を表示する
 set list
 set listchars=tab:>-,trail:-,extends:>,precedes:<,nbsp:%
-"eol: 行末の改行文字
-"tab: タブ
-"trail: 行末のスペース
-"extends: 折り返した行の行末
-"precedes: 折り返してきた行の行頭
-"nbsp: ノンブレーカブル・スペースとかいうの（良く分かってない
-"全角スペースの設定
-"scriptencoding utf-8
-function! ZenkakuSpace()
-  highlight ZenkakuSpace term=reverse ctermbg=12 gui=undercurl guisp=Red
-  "highlight ZenkakuSpace cterm=underline ctermbg=LightMagenta gui=underline guibg=LightMagenta
-endfunction
-
-if has('syntax')
-  augroup ZenkakuSpace
-    autocmd!
-    " ZenkakuSpaceをカラーファイルで設定するなら次の行は削除
-    autocmd ColorScheme       * call ZenkakuSpace()
-    " 全角スペースのハイライト指定
-    autocmd VimEnter,WinEnter * match ZenkakuSpace /　/
-  augroup END
-  call ZenkakuSpace()
-endif
-"augroup highlightDoubleByteSpace
-    "autocmd!
-    "autocmd VimEnter,Colorscheme * highlight DoubleByteSpace term=underline ctermbg=LightMagenta guibg=LightMagenta
-    "autocmd VimEnter,WinEnter,BufRead * match DoubleByteSpace /　/
-"augroup END
-
 "シンタックス設定
-"autocmd ColorScheme * highlight SpecialKey ctermfg=1     " ターミナル版での文字色指定
-"autocmd ColorScheme * highlight SpecialKey ctermbg=7     " ターミナル版での背景色指定
 syntax on
 "ステータス行表示設定
 "http://ogawa.s18.xrea.com/fswiki/wiki.cgi?page=Vim%A4%CE%A5%E1%A5%E2
+set laststatus=2
 set statusline=%<%f\ %m\ %r%h%w[%Y]%{'['.(&fenc!=''?&fenc:&enc).']['.&ff.']'}%=\ (%v,%l)/%L%8P\
 "ビープ音すべてを無効にする
 set visualbell
@@ -91,160 +45,3 @@ autocmd BufNewFile,BufRead *.{md,mdwn,mkd,mkdn,mark*} set filetype=markdown
 set clipboard+=unnamed
 "印刷時フォント設定
 set printfont=ＭＳ_ゴシック:h12:cSHIFTJIS
-"matchit.vimの使用
-source $VIMRUNTIME/macros/matchit.vim
-" syntastic設定
-let g:syntastic_enable_signs=1
-let g:syntastic_auto_loc_list=2
-let g:syntastic_mode_map = {'mode': 'active'}
-" なんでか分からないけど php コマンドのオプションを上書かないと動かなかった
-" let g:syntastic_php_php_args = '-l'
-" set statusline+=%#warningmsg#
-" set statusline+=%{SyntasticStatuslineFlag()}
-" set statusline+=%*
-augroup AutoSyntastic
-    autocmd!
-    autocmd InsertLeave,TextChanged * call s:syntastic() 
-augroup END
-function! s:syntastic()
-    SyntasticCheck
-endfunction
-" vim-refの設定
-let g:ref_phpmanual_cmd = 'C:\softwares\lynx\lynx.exe -cfg=C:\softwares\lynx\lynx.cfg -dump %s'
-let g:ref_phpmanual_path = 'C:\softwares\php_ref\php-chunked-xhtml'
-" pastetoggle
-set pastetoggle=<f5>
-" hidden設定
-set hidden
-
-" ！neobundleの設定！
-if !1 | finish | endif
-
-if has('vim_starting')
-  set nocompatible               " Be iMproved
-
-  " Required:
-  set runtimepath+=$vim/bundle/neobundle.vim/
-endif
-
-" Required:
-call neobundle#begin(expand('~/.vim/bundle/'))
-
-" Let NeoBundle manage NeoBundle
-" Required:
-NeoBundleFetch 'Shougo/neobundle.vim'
-
-" My Bundles here:
-" Refer to |:NeoBundle-examples|.
-" Note: You don't set neobundle setting in .gvimrc!
-
-" colorscheme
-NeoBundle 'altercation/vim-colors-solarized'
-NeoBundle 'tomasr/molokai'
-NeoBundle 'jonathanfilip/vim-lucius'
-NeoBundle 'vim-scripts/pyte'
-NeoBundle 'chriskempson/vim-tomorrow-theme'
-" Bundle
-NeoBundle 'tpope/vim-surround'
-NeoBundle 'scrooloose/syntastic'
-NeoBundle 'Shougo/neocomplcache'
-NeoBundle 'thinca/vim-ref'
-
-call neobundle#end()
-
-" Required:
-filetype plugin indent on
-
-" If there are uninstalled bundles found on startup,
-" this will conveniently prompt you to install them.
-NeoBundleCheck
-
-"Note: This option must set it in .vimrc(_vimrc).  NOT IN .gvimrc(_gvimrc)!
-" Disable AutoComplPop.
-let g:acp_enableAtStartup = 0
-" Use neocomplcache.
-let g:neocomplcache_enable_at_startup = 1
-" Use smartcase.
-let g:neocomplcache_enable_smart_case = 1
-" Set minimum syntax keyword length.
-let g:neocomplcache_min_syntax_length = 3
-let g:neocomplcache_lock_buffer_name_pattern = '\*ku\*'
-
-" Enable heavy features.
-" Use camel case completion.
-"let g:neocomplcache_enable_camel_case_completion = 1
-" Use underbar completion.
-"let g:neocomplcache_enable_underbar_completion = 1
-
-" Define dictionary.
-let g:neocomplcache_dictionary_filetype_lists = {
-    \ 'default' : '',
-    \ 'vimshell' : $HOME.'/.vimshell_hist',
-    \ 'scheme' : $HOME.'/.gosh_completions'
-        \ }
-
-" Define keyword.
-if !exists('g:neocomplcache_keyword_patterns')
-    let g:neocomplcache_keyword_patterns = {}
-endif
-let g:neocomplcache_keyword_patterns['default'] = '\h\w*'
-
-" Plugin key-mappings.
-inoremap <expr><C-g>     neocomplcache#undo_completion()
-inoremap <expr><C-l>     neocomplcache#complete_common_string()
-
-" Recommended key-mappings.
-" <CR>: close popup and save indent.
-inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
-function! s:my_cr_function()
-  return neocomplcache#smart_close_popup() . "\<CR>"
-  " For no inserting <CR> key.
-  "return pumvisible() ? neocomplcache#close_popup() : "\<CR>"
-endfunction
-" <TAB>: completion.
-inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
-" <C-h>, <BS>: close popup and delete backword char.
-inoremap <expr><C-h> neocomplcache#smart_close_popup()."\<C-h>"
-inoremap <expr><BS> neocomplcache#smart_close_popup()."\<C-h>"
-inoremap <expr><C-y>  neocomplcache#close_popup()
-inoremap <expr><C-e>  neocomplcache#cancel_popup()
-" Close popup by <Space>.
-"inoremap <expr><Space> pumvisible() ? neocomplcache#close_popup() : "\<Space>"
-
-" For cursor moving in insert mode(Not recommended)
-"inoremap <expr><Left>  neocomplcache#close_popup() . "\<Left>"
-"inoremap <expr><Right> neocomplcache#close_popup() . "\<Right>"
-"inoremap <expr><Up>    neocomplcache#close_popup() . "\<Up>"
-"inoremap <expr><Down>  neocomplcache#close_popup() . "\<Down>"
-" Or set this.
-"let g:neocomplcache_enable_cursor_hold_i = 1
-" Or set this.
-"let g:neocomplcache_enable_insert_char_pre = 1
-
-" AutoComplPop like behavior.
-"let g:neocomplcache_enable_auto_select = 1
-
-" Shell like behavior(not recommended).
-"set completeopt+=longest
-"let g:neocomplcache_enable_auto_select = 1
-"let g:neocomplcache_disable_auto_complete = 1
-"inoremap <expr><TAB>  pumvisible() ? "\<Down>" : "\<C-x>\<C-u>"
-
-" Enable omni completion.
-autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
-autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
-autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
-autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
-autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
-
-" Enable heavy omni completion.
-if !exists('g:neocomplcache_force_omni_patterns')
-  let g:neocomplcache_force_omni_patterns = {}
-endif
-let g:neocomplcache_force_omni_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
-let g:neocomplcache_force_omni_patterns.c = '[^.[:digit:] *\t]\%(\.\|->\)'
-let g:neocomplcache_force_omni_patterns.cpp = '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
-
-" For perlomni.vim setting.
-" https://github.com/c9s/perlomni.vim
-let g:neocomplcache_force_omni_patterns.perl = '\h\w*->\h\w*\|\h\w*::'
