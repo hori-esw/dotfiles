@@ -1,4 +1,0 @@
-Host web
-    HostName 192.168.43.52
-Host db
-    HostName 192.168.43.53
