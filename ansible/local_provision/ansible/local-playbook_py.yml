@@ -1,0 +1,52 @@
+---
+- hosts: localhost
+  sudo: yes
+  vars:
+    home_dir: /home/vagrant/
+    repos_dir: /home/vagrant/repos/git/
+    log_dir: /home/vagrant/ansible/log/
+    flg_dir: /home/vagrant/ansible/flg/
+    user: vagrant
+  tasks:
+    - name: vimインストール
+      yum: name=vim-enhanced state=installed
+
+#    - name: apacheインストール
+#      yum: name=httpd state=installed
+
+    - name: libselinux-pythonインストール
+      yum: name=libselinux-python state=installed
+
+#    - name: apacheは停止しておく
+#      service: name=httpd state=stopped enabled=no
+
+    - name: gitインストール
+      yum: name=git state=installed
+
+#    - name: mkdir
+#      file: path={{ repos_dir }} owner={{ user }} group={{ user }} state=directory recurse=yes
+#      file: path={{ log_dir }} owner={{ user }} group={{ user }} state=directory recurse=yes
+#      file: path={{ flg_dir }} owner={{ user }} group={{ user }} state=directory recurse=yes
+#      sudo: no
+
+#    - name: phpenvをクローン
+#      git: repo=https://github.com/CHH/phpenv.git dest={{repos_dir}}
+#      sudo: no
+
+#    - name: chown
+#      file: path={{ repos_dir }} owner={{ user }} group={{ user }} state=directory recurse=yes
+#      sudo: no
+
+#    - name: phpenvインストール
+#      shell: "{{ repos_dir }}bin/phpenv-install.sh >> {{ log_dir }}phpenv-install.log"
+#      args:
+#        creates: "{{ log_dir }}phpenv-install.log"
+#      sudo: no
+
+#    - name: bashrc追記
+#      lineinfile: dest={{ home_dir }}.bashrc line='export PATH="/root/.phpenv/bin:$PATH"'
+#      sudo: no
+
+#    - name: bashrc追記2
+#      lineinfile: dest={{ home_dir }}.bashrc line='eval "$(phpenv init -)"'
+#      sudo: no
