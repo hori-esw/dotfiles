@@ -29,6 +29,9 @@
     - name: openssl-develインストール
       yum: name=openssl-devel state=installed
 
+    - name: sqliteインストール
+      yum: name=sqlite state=installed
+
     - name: Python3のtarballをダウンロード
       get_url: url=https://www.python.org/ftp/python/3.4.3/Python-3.4.3.tar.xz dest=/tmp
 
@@ -46,7 +49,7 @@
     - name: virtualenvをインストール
       pip: name=virtualenv executable=/usr/local/bin/pip3.4
 
-    - name: virtualenvにbottleインストール
+    - name: virtualenvに入る・bottleインストール
       pip: name=bottle virtualenv=~/myenv virtualenv_command=/usr/local/bin/virtualenv
       sudo: no
 
