@@ -46,8 +46,8 @@
     - name: virtualenvをインストール
       pip: name=virtualenv executable=/usr/local/bin/pip3.4
 
-    - name: virtualenvに入る・bottleインストール
-      pip: name=bottle virtualenv=~/myenv
+    - name: virtualenvにbottleインストール
+      pip: name=bottle virtualenv=~/myenv virtualenv_command=/usr/local/bin/virtualenv
       sudo: no
 
     - name: bottleアプリケーション実行
