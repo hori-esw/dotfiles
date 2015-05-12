@@ -32,6 +32,9 @@
     - name: sqliteインストール
       yum: name=sqlite state=installed
 
+    - name: sqlite-develインストール
+      yum: name=sqlite-devel state=installed
+
     - name: Python3のtarballをダウンロード
       get_url: url=https://www.python.org/ftp/python/3.4.3/Python-3.4.3.tar.xz dest=/tmp
 
@@ -50,9 +53,13 @@
       pip: name=virtualenv executable=/usr/local/bin/pip3.4
 
     - name: virtualenvに入る・bottleインストール
-      pip: name=bottle virtualenv=~/myenv virtualenv_command=/usr/local/bin/virtualenv
+      pip: name=bottle virtualenv=~vagrant/myenv virtualenv_command=/usr/local/bin/virtualenv-3.4
       sudo: no
 
-    - name: bottleアプリケーション実行
-      shell: nohup ~/myenv/bin/python3.4  /vagrant/bottle/hello_world.py &
+    - name: sqlalchemyインストール
+      pip: name=sqlalchemy virtualenv=~vagrant/myenv virtualenv_command=/usr/local/bin/virtualenv-3.4
       sudo: no
+
+#    - name: bottleアプリケーション実行
+#      shell: nohup ~/myenv/bin/python3.4  /vagrant/bottle/hello_world.py &
+#      sudo: no
