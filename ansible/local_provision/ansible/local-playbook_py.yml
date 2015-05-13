@@ -3,40 +3,21 @@
   sudo: yes
   vars:
     home_dir: /home/vagrant/
-    repos_dir: /home/vagrant/repos/git/
-    log_dir: /home/vagrant/ansible/log/
-    flg_dir: /home/vagrant/ansible/flg/
-    user: vagrant
+    python3_get_url: https://www.python.org/ftp/python/3.4.3/Python-3.4.3.tar.xz
   tasks:
-    - name: vimインストール
-      yum: name=vim-enhanced state=installed
-
-    - name: development_toolsインストール
-      yum: name="@Development tools" state=installed
-
-#    - name: apacheインストール
-#      yum: name=httpd state=installed
-
-    - name: libselinux-pythonインストール
-      yum: name=libselinux-python state=installed
-
-#    - name: apacheは停止しておく
-#      service: name=httpd state=stopped enabled=no
-
-    - name: gitインストール
-      yum: name=git state=installed
-
-    - name: openssl-develインストール
-      yum: name=openssl-devel state=installed
-
-    - name: sqliteインストール
-      yum: name=sqlite state=installed
-
-    - name: sqlite-develインストール
-      yum: name=sqlite-devel state=installed
+    - name: yumパッケージインストール
+      yum: name="{{ item }}" state=installed
+      with_items:
+        - vim-enhanced
+        - "@Development tools"
+        - libselinux-python
+        - git
+        - openssl-devel
+        - sqlite
+        - sqlite-devel
 
     - name: Python3のtarballをダウンロード
-      get_url: url=https://www.python.org/ftp/python/3.4.3/Python-3.4.3.tar.xz dest=/tmp
+      get_url: url={{ python3_get_url }} dest=/tmp
 
     - name: Python3のtarballを展開
       unarchive: src=/tmp/Python-3.4.3.tar.xz dest=/usr/local/src
@@ -52,19 +33,11 @@
     - name: virtualenvをインストール
       pip: name=virtualenv executable=/usr/local/bin/pip3.4
 
-    - name: virtualenvに入る・bottleインストール
-      pip: name={{ item }} virtualenv=~vagrant/myenv virtualenv_command=/usr/local/bin/virtualenv-3.4
+    - name: virtualenvに入る・pipパッケージインストール
+      pip: name={{ item }} virtualenv={{ home_dir }}/myenv virtualenv_command=/usr/local/bin/virtualenv-3.4
       with_items: 
         - bottle
         - sqlalchemy
         - bottle-sqlalchemy
         - WTForms
       sudo: no
-
-#    - name: sqlalchemyインストール
-#      pip: name=sqlalchemy virtualenv=~vagrant/myenv virtualenv_command=/usr/local/bin/virtualenv-3.4
-#      sudo: no
-
-#    - name: bottleアプリケーション実行
-#      shell: nohup ~/myenv/bin/python3.4  /vagrant/bottle/hello_world.py &
-#      sudo: no
