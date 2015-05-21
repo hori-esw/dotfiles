@@ -4,6 +4,7 @@
   vars:
     home_dir: /home/vagrant/
     python3_get_url: https://www.python.org/ftp/python/3.4.3/Python-3.4.3.tar.xz
+    python2_7_get_url: https://www.python.org/ftp/python/2.7.9/Python-2.7.9.tar.xz
   tasks:
     - name: yumパッケージインストール
       yum: name="{{ item }}" state=installed
@@ -15,6 +16,7 @@
         - openssl-devel
         - sqlite
         - sqlite-devel
+        - readline-devel
 
     - name: Python3のtarballをダウンロード
       get_url: url={{ python3_get_url }} dest=/tmp
@@ -30,8 +32,29 @@
         chdir=/usr/local/src/Python-3.4.3
         creates=/usr/local/bin/python3.4
 
-    - name: virtualenvをインストール
+    - name: Python2.7のtarballをダウンロード
+      get_url: url={{ python2_7_get_url }} dest=/tmp
+
+    - name: Python2,7のtarballを展開
+      unarchive: src=/tmp/Python-2.7.9.tar.xz dest=/usr/local/src
+
+    - name: Python2.7をインストール
+      shell: >
+        ./configure --prefix=/usr/local &&
+        make &&
+        make altinstall
+        chdir=/usr/local/src/Python-2.7.9
+        creates=/usr/local/bin/python2.7
+
+    - name: pip2.7をインストール
+      shell: /usr/local/bin/python2.7 -m ensurepip
+        creates=/usr/local/bin/pip2.7
+
+    - name: py3_virtualenvをインストール
       pip: name=virtualenv executable=/usr/local/bin/pip3.4
+
+    - name: py2_virtualenvをインストール
+      pip: name=virtualenv executable=/usr/local/bin/pip2.7
 
     - name: virtualenvに入る・pipパッケージインストール
       pip: name={{ item }} virtualenv={{ home_dir }}/myenv virtualenv_command=/usr/local/bin/virtualenv-3.4
