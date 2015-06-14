@@ -24,5 +24,35 @@ from wtforms import StringField, IntegerField, TextAreaField
 
 
 
+Base = declarative_base()
+engine = create_engine('sqlite:///:memory:', echo=True)
 
+# bottle-sqlalchemyの設定
+plugin = sqlalchemy.Plugin(
+    engine,
+    Base.metadata,
+    keyword='db',
+    create=True,
+    commit=True,
+    use_kwargs=False
+)
+
+bottle.install(plugin)
+
+# モデルの作成
+
+class Book(Base):
+
+    # booksテーブルを使用
+    __tablename__ = 'books'
+
+    # カラムの定義
+    id = Column(Integer, primary_key=True)
+    title = Column(Unicode(100), nullable=False)
+    price = Column(Integer, nullable=False)
+    memo = Column(UnicodeText)
+    created_at = Column(DateTime, default=datetime.now)
+
+    def __repr__(self):
+        return "<Book('%s','%s','%s','%s')>" % (self.title, self.price, self.memo, self.created_at)
 
