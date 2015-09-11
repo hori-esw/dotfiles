@@ -44,6 +44,10 @@ autocmd BufNewFile,BufRead *.{md,mdwn,mkd,mkdn,mark*} set filetype=markdown
 set clipboard=unnamedplus
 "印刷時フォント設定
 set printfont=ＭＳ_ゴシック:h12:cSHIFTJIS
+
+set backupdir=~/.vim/vim_bk/ "バックアップディレクトリを指定する
+set directory=~/.vim/vim_bk/    "スワップファイルディレクトリを指定する
+set undodir=~/.vim/vim_bk/     "アンドゥファイルディレクトリを指定する
 " fcitx
 set iminsert=2
 set imsearch=2
@@ -55,7 +59,7 @@ function! ImActivate(active)
     call system('fcitx-remote -c')
   endif
 endfunction
-set imstatusfunc=ImStatus
-function! ImStatus()
-  return system('fcitx-remote')[0] is# '2'
-endfunction
+"set imstatusfunc=ImStatus
+"function! ImStatus()
+"  return system('fcitx-remote')[0] is# '2'
+"endfunction
