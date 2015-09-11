@@ -1,0 +1,7 @@
+export HISTCONTROL=ignoreboth
+ hostname
+ set -o vi
+ alias 'll=ls -laF' 'lt=ls -latrF' 'ld=ls -laFd' 'view=vim -R' 'rm=rm -i' 'crontab=crontab -i' 'vim=vim -p +"set background=dark" '
+ export TERM=screen
+ export PSQL_EDITOR='vim +"set syntax=sql" '
+ export PAGER=less
