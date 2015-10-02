@@ -1,1 +1,16 @@
+" copy.js
+javascript <<EOM
+  liberator.globalVariables.copy_templates = [
+    { label: 'title', value: '%TITLE%' },
+    { label: 'plain', value: '%TITLE% %URL%' },
+    { label: 'anchor', value: '<a href="%URL%">%TITLE%</a>' },
+    { label: 'markdown', value: '[%TITLE%](%URL%)' },
+  ];
+EOM
+
+" リンクのヒント文字をsmartに
 set hintchars=hjklasdfgyuiopqwertnmzxcvb
+
+" K/Jでタブ移動
+map K gt
+map J gT
